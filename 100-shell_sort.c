@@ -8,7 +8,7 @@
   */
 void shell_sort(int *array, size_t size)
 {
-	unsigned int a = 0, b = 0, gp = 0;
+	unsigned int a = 0, b = 0, gp = 1;
 	int mnc = 0;
 
 	if (array == NULL || size < 2)
@@ -22,15 +22,11 @@ void shell_sort(int *array, size_t size)
 		for (a = gp; a < size; a++)
 		{
 			mnc = array[a];
-			for (b = a; b >= gp && array[b - gp] > mnc;
-					b -= gp)
+			for (b = a; b >= gp && array[b - gp] > mnc; b -= gp)
 			{
-				if (array[b] != array[b - gp])
-					array[b] = array[b - gp];
+				array[b] = array[b - gp];
 			}
-			if (array[b] != mnc)
-				array[b] = mnc;
-
+			array[b] = mnc;
 		}
 		print_array(array, size);
 	}
