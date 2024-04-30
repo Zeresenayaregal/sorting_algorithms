@@ -1,58 +1,37 @@
 #include "sort.h"
 
-
 /**
- * gp_sort - sort array with gps
- * @array: arr to be sort
- * @size: size of arr
- * @gp: gp size
- */
-void gp_sort(int *array, size_t size, unsigned int gp)
-{
-	size_t a, b;
-
-	for (a = gp; a < size; a++)
-	{
-		for (b = a; b >= gp && array[b] < array[b - gp]; b -= gp)
-		{
-			swp(array + b, array + b - gp);
-		}
-	}
-}
-
-/**
- * shell_sort - shell sort
- * @array: arr to be sort
- * @size: size of arr
- */
+  * shell_sort - A function of shell algo.
+  * @array: The arr to sort.
+  * @size: The len of the arr.
+  * Return: Nothing.
+  */
 void shell_sort(int *array, size_t size)
 {
-	unsigned int gp = 1;
+	unsigned int a = 0, b = 0, gp = 0;
+	int mnc = 0;
+
+	if (array == NULL || size < 2)
+		return;
 
 	while (gp < size / 3)
 		gp = gp * 3 + 1;
 
-	while (gp >= 1)
+	for (; gp > 0; gp = (gp - 1) / 3)
 	{
-		gp_sort(array, size, gp);
-		gp = (gp - 1) / 3;
+		for (a = gp; a < size; a++)
+		{
+			mnc = array[a];
+			for (b = a; b >= gp && array[b - gp] > mnc;
+					b -= gp)
+			{
+				if (array[b] != array[b - gp])
+					array[b] = array[b - gp];
+			}
+			if (array[b] != mnc)
+				array[b] = mnc;
+
+		}
 		print_array(array, size);
 	}
-}
-
-
-/**
- * swp - Function that swaps two values
- *
- * @num1: Fisrt value
- * @num2: Second value
- * Return: 0
- */
-void swp(int *num1, int *num2)
-{
-	int temp;
-
-	temp = *num2;
-	*num2 = *num1;
-	*num1 = temp;
 }
