@@ -1,14 +1,18 @@
 #include "sort.h"
 
+
+#define U 1
+#define D 2
+
 /**
- * bitonic_merge - Sort a bitonic squence.
+ * b_m - Sort a bitonic squence.
  * @array: An arr of ints.
  * @size: The size of the array.
  * @strt: The strting idx
  * @sq: The s of the squence.
  * @fw: The dir to sort in.
  */
-void bitonic_merge(int *array, size_t size, size_t strt, size_t sq,
+void b_m(int *array, size_t size, size_t strt, size_t sq,
 		char fw)
 {
 	size_t i, jmp = sq / 2;
@@ -17,36 +21,36 @@ void bitonic_merge(int *array, size_t size, size_t strt, size_t sq,
 	{
 		for (i = strt; i < strt + jmp; i++)
 		{
-			if ((fw == UP && array[i] > array[i + jmp]) ||
-			    (fw == DOWN && array[i] < array[i + jmp]))
+			if ((fw == U && array[i] > array[i + jmp]) ||
+			    (fw == D && array[i] < array[i + jmp]))
 				swp(array + i, array + i + jmp);
 		}
-		bitonic_merge(array, size, strt, jmp, fw);
-		bitonic_merge(array, size, strt + jmp, jmp, fw);
+		b_m(array, size, strt, jmp, fw);
+		b_m(array, size, strt + jmp, jmp, fw);
 	}
 }
 
 /**
- * bitonic_sq - Convert an arr of ints into a bit.
+ * b_sq - Convert an arr of ints into a bit.
  * @array: An array of ints.
  * @size: The size of the arr.
  * @strt: The srt idx.
  * @sq: The size of a block.
  * @fw: The direction to sort.
  */
-void bitonic_sq(int *array, size_t size, size_t strt, size_t sq, char fw)
+void b_sq(int *array, size_t size, size_t strt, size_t sq, char fw)
 {
-	size_t cut = sq / 2;
-	char *str = (fw == UP) ? "UP" : "DOWN";
+	size_t vt = sq / 2;
+	char *str = (fw == U) ? "U" : "D";
 
 	if (sq > 1)
 	{
 		printf("Merging [%lu/%lu] (%s):\n", sq, size, str);
 		print_array(array + strt, sq);
 
-		bitonic_sq(array, size, strt, cut, UP);
-		bitonic_sq(array, size, strt + cut, cut, DOWN);
-		bitonic_merge(array, size, strt, sq, fw);
+		b_sq(array, size, strt, vt, U);
+		b_sq(array, size, strt + vt, vt, D);
+		b_m(array, size, strt, sq, fw);
 
 		printf("Result [%lu/%lu] (%s):\n", sq, size, str);
 		print_array(array + strt, sq);
@@ -64,7 +68,7 @@ void bitonic_sort(int *array, size_t size)
 	if (array == NULL || size < 2)
 		return;
 
-	bitonic_sq(array, size, 0, size, UP);
+	b_sq(array, size, 0, size, U);
 }
 
 /**
