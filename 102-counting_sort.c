@@ -44,41 +44,23 @@ void counting_sort(int *array, size_t size)
 		free(temp);
 		return;
 	}
-	
-	a = 0;
 
-	while (a < size)
-	{
+	for (a = 0; a < size; a++)
 		temp[array[a]]++;
-		a++;
-	}
 
-	b = 1
-
-	while (b < mx + 1)
-	{
+	for (b = 1; b < mx + 1; b++)
 		temp[b] += temp[b - 1];
-		b++;
-	}
 
 	print_array(temp, mx + 1);
 
-
-	a = 0;
-
-	while (a < size)
+	for (a = 0; a < size; a++)
 	{
 		temp[array[a]]--;
 		cpy[temp[array[a]]] = array[a];
-		a++;
 	}
 
-	a = 0;
-	while (a < size)
-	{
+	for (a = 0; a < size; a++)
 		array[a] = cpy[a];
-		a++;
-	}
 
 	free(temp);
 	free(cpy);

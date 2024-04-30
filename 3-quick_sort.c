@@ -16,11 +16,11 @@ void quick_sort(int *array, size_t size)
 
 	ob_sort(array, size, 1);
 
-	pivot = part(array, size); // part and get pivot idx
+	pivot = part(array, size);
 
-	quick_sort(array, pivot); // repeat for left of idx
+	quick_sort(array, pivot);
 
-	quick_sort(array + pivot, size - pivot); // repeat for idx and right
+	quick_sort(array + pivot, size - pivot);
 }
 
 
@@ -66,7 +66,7 @@ size_t part(int array[], size_t size)
  * ob_sort - Function that prints as it should
  * @array: Array to be printed
  * @size: Size of array
- * @init: Should initialize array
+ * @strt: Should initialize array
  * Return: 0
  */
 void ob_sort(int array[], size_t size, int strt)
