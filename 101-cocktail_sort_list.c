@@ -60,44 +60,47 @@ void sw_n_b(listint_t **list, listint_t **tl, listint_t **shr)
 
 void cocktail_sort_list(listint_t **list)
 {
-	listint_t *tl, *shr;
-	int s, not_s;
+    listint_t *tl, *shr;
+    int s, not_s;
 
-	if (list == NULL || *list == NULL || (*list)->next == NULL)
-		return;
-	tl = *list;
-	while (tl->next != NULL)
-		tl = tl->next;
-	do {
-		s = not_s = 0;
-		shr = *list;
+    if (list == NULL || *list == NULL || (*list)->next == NULL)
+        return;
 
-	while (shr != tl)
-	{
-		if (shr->n > shr->next->n)
-		{
-			sw_n_a(list, &tl, &shr);
-			print_list((const listint_t *) *list);
-			s = 1;
-		}
-		shr = shr->next;
-	}
-	if (!s)
-		break;
+    tl = *list;
+    while (tl->next != NULL)
+        tl = tl->next;
 
-	tl = tl->prev;
-	shr = tl;
+    do {
+        s = not_s = 0;
+        shr = *list;
 
-	while (shr != *list)
-	{
-		if (shr->n < shr->prev->n)
-		{
-			sw_n_b(list, &tl, &shr);
-			print_list((const listint_t *) *list);
-			not_s = 1;
-		}
-		shr = shr->prev;
-	}
+        while (shr != tl) {
+            if (shr->n > shr->next->n) {
+                sw_n_a(list, &tl, &shr);
+                print_list((const listint_t *) *list);
+                s = 1;
+            }
+            else {
+                shr = shr->next; // Move to the next node if no swap is made
+            }
+        }
 
-	} while (s || not_s);
+        if (!s)
+            break;
+
+        tl = tl->prev;
+        shr = tl;
+
+        while (shr != *list) {
+            if (shr->n < shr->prev->n) {
+                sw_n_b(list, &tl, &shr);
+                print_list((const listint_t *) *list);
+                not_s = 1;
+            }
+            else {
+                shr = shr->prev;
+            }
+        }
+
+    } while (s || not_s);
 }
