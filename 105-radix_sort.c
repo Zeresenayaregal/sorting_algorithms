@@ -1,35 +1,43 @@
 #include "sort.h"
 
 /**
- * radix_sort -
+ * mx - Find the maximum value in an array.
+ * @array: Pointer to the array.
+ * @size: Size of the array.
  *
- * Return: 
+ * Return: The maximum value in the array.
  */
 
-int mx(int *a, int s);
-void rcs(int *a, size_t s, int d, int *b);
-void rs(int *a, size_t s);
 
-int mx(int *a, int s)
+int mx(int *array, int size)
 {
 	int m, i;
 
-	for (m = a[0], i = 1; i < s; i++)
+	for (m = array[0], i = 1; i < size; i++)
 	{
-		if (a[i] > m)
-			m = a[i];
+		if (array[i] > m)
+			m = array[i];
 	}
 
 	return m;
 }
 
-void rcs(int *a, size_t s, int d, int *b)
+
+/**
+ * rcs - Perform counting sort on a given digit.
+ * @array: Pointer to the array.
+ * @size: Size of the array.
+ * @d: The digit to perform counting sort on.
+ * @b: Temporary array for storing sorted elements.
+ */
+
+void rcs(int *array, size_t size, int d, int *b)
 {
 	int c[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 	size_t i;
 
-	for (i = 0; i < s; i++)
-		c[(a[i] / d) % 10] += 1;
+	for (i = 0; i < size; i++)
+		c[(array[i] / d) % 10] += 1;
 
 	i = 0;
 	while (i < 10)
@@ -38,39 +46,46 @@ void rcs(int *a, size_t s, int d, int *b)
 		i++;
 	}
 
-	i = s - 1;
+	i = size - 1;
 	while (i >= 0)
 	{
-		b[c[(a[i] / d) % 10] - 1] = a[i];
-		c[(a[i] / d) % 10] -= 1;
+		b[c[(array[i] / d) % 10] - 1] = array[i];
+		c[(array[i] / d) % 10] -= 1;
 		i--;
 	}
 
 	i = 0;
-	while (i < s)
+	while (i < size)
 	{
-		a[i] = b[i];
+		array[i] = b[i];
 		i++;
 	}
 }
 
-void rs(int *a, size_t s)
+
+/**
+ * radix_sort - Sort an array of ints
+ * @array: Pointer to the array.
+ * @size: Size of the array.
+ *
+ */
+void radix_sort(int *array, size_t size);
 {
 	int m, d, *b;
 
-	if (a == NULL || s < 2)
+	if (array == NULL || size < 2)
 		return;
 
-	b = malloc(sizeof(int) * s);
+	b = malloc(sizeof(int) * size);
 	if (b == NULL)
 		return;
 
-	m = mx(a, s);
+	m = mx(array, size);
 	d = 1;
 	while (m / d > 0)
 	{
-		rcs(a, s, d, b);
-		print_array(a, s);
+		rcs(array, size, d, b);
+		print_array(array, size);
 		d *= 10;
 	}
 
