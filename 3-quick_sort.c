@@ -79,7 +79,7 @@ void ob_sort(int array[], size_t size, int strt)
 		a = array;
 		b = size;
 	}
-	if (!init)
+	if (!strt)
 		print_array(a, b);
 }
 
