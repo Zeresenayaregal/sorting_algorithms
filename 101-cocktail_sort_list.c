@@ -81,7 +81,7 @@ void cocktail_sort_list(listint_t **list)
                 s = 1;
             }
             else {
-                shr = shr->next; // Move to the next node if no swap is made
+                shr = shr->next;
             }
         }
 
